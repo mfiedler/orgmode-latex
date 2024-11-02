@@ -1,4 +1,4 @@
-#+TITLE: Example for an Org Mode export to LaTeX
+#+TITLE: Example for Org Mode export to LaTeX
 #+DATE:
 #+AUTHOR: Michael Fiedler
 # INCLUDE: include.org
@@ -21,19 +21,32 @@
 #+LATEX_HEADER: %\usepackage[kerning,spacing]{microtype} % more compact and arguably nicer
 #+LATEX_HEADER: \usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
 #+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{listings-rust}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \usepackage{MnSymbol}
 #+BIBLIOGRAPHY: test.bib
-#+CITE_EXPORT: biblatex
+#+CITE_EXPORT: biblatex numeric-comp
 
 #+begin_export latex
 % Overwrite Org mode's AUTHOR for advanced usage
-\author{Firstname Lastname\\Company \and AnotherFirstname AnotherLastname \\ AnotherCompany}
- 
+%\author{
+%  Firstname Lastname\\\textit{Institution}
+%  \and Firstname Lastname \\ \textit{AnotherInstitution}
+%}
+% https://tex.stackexchange.com/questions/9594/adding-more-than-one-author-with-different-affiliation
+\author{
+  \normalsize \textbf{Firstname Lastname} \\ \normalsize Institution \\ \small\texttt{lastname@institution.org}
+  \and \normalsize \textbf{Firstname Lastname} \\ \normalsize AnotherInstitution \\ \small\texttt{another@anotherinst.org}
+}
+
 \hypersetup{
   colorlinks,
   linkcolor={green!80!black},
   citecolor={red!70!black},
   urlcolor={blue!70!black}
 }
+
+\urlstyle{same}  % fixed-width font takes too much space, so set to same, rm or sf
 
 \colorlet{commentgreen}{teal!80!black}
 \colorlet{stringred}{red!60!black}
@@ -53,7 +66,20 @@
   %firstnumber=1,
   %numberfirstline=true,
   tabsize=4,
+  abovecaptionskip=\medskipamount,
+  belowcaptionskip=\medskipamount,
+  breakatwhitespace=true,
+  %prebreak=\raisebox{0ex}[0ex][0ex]{\color{gray}\ensuremath{\lcurvearrowdown}},
+  prebreak=\raisebox{0ex}[0ex][0ex]{\color{gray}\ensuremath{\rhookswarrow}},
+  frame=lines,
+  framesep=5pt,
+  tabsize=4,
+  showtabs=true,
 }
+
+% space around table captions
+\captionsetup[table]{skip=\medskipamount}
+
 
 % Less space before title
 \setlength{\droptitle}{-1cm}
@@ -69,7 +95,6 @@
 
 # \noindent: prevent indent at begin of abstract
 # \normalsize: avoid that the abstract text is using a smaller font size than normal text
-
 #+BEGIN_abstract
 \noindent \normalsize
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -81,6 +106,7 @@ tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
 vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 #+END_abstract
+
 #+begin_export latex
     \vspace{.75cm}  % fix too small space after abstract
   \end{@twocolumnfalse}
@@ -89,24 +115,21 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 * First section
 
-Example for a citation
-example\nbsp[cite:@arpachiDusseau18:osbook;@waldspurger02]. Example for an
-inline footnote[fn:: This is an inline footnote.].
-
-This is an example for references, to figure\nbsp[[fig:pnggraphic]],
-figure\nbsp[[fig:vectorgraphic]] and
-figure\nbsp\ref{fig:rawlatexusingtikz}. Moreover, the font sizes of headings
-should be smaller.
+Example for a
+citation\nbsp[cite:@arpachiDusseau18:osbook;@waldspurger02;@Levis:2004:ENA:1251175.1251176]. Example
+for an inline footnote[fn:: This is an inline footnote.].  This is an example
+for references, to figure\nbsp[[fig:pnggraphic]], figure\nbsp[[fig:vectorgraphic]] and
+figure\nbsp\ref{fig:rawlatexusingtikz}.
 
 #+CAPTION: This is a PNG graphic.
 #+NAME: fig:pnggraphic
 [[./bitmap_graphic.png]]
 
+
 # Vector graphics require package svg, Inkscape in PATH and pdflatex option -shell-escape
 #+CAPTION: This is the caption of this graphic. It is a vector graphic.
 #+NAME: fig:vectorgraphic
 [[./vector_graphic.svg]]
-
 
 
 # A raw LaTeX figure, using TikZ
@@ -133,7 +156,7 @@ should be smaller.
 
 ** Second subsection
 
-\lipsum[3-4]
+\lipsum[3]
 
 ** Third subsection
 
@@ -142,6 +165,7 @@ listing\nbsp[[src:lispexample]] and listing\nbsp[[src:javaexamplewithnumbers]].
 
 #+CAPTION: This is an example for an Emacs Lisp source code listing.
 #+NAME: src:lispexample
+#+ATTR_LATEX: :options captionpos=t
 #+BEGIN_SRC emacs-lisp
   (defun org-xor (a b)
     "Exclusive or."
@@ -150,10 +174,10 @@ listing\nbsp[[src:lispexample]] and listing\nbsp[[src:javaexamplewithnumbers]].
 
 #+CAPTION: This is an example for a Java source code listing with line numbers.
 #+NAME: src:javaexamplewithnumbers
-#+ATTR_LATEX: :options numbers=left
+#+ATTR_LATEX: :options numbers=left,captionpos=t
 #+begin_src java
 /**
- * This is an example Java class.
+ * An example Java class.
  */
 public class Example {
     public static void main(String[] args) {
@@ -163,9 +187,44 @@ public class Example {
 #+end_src
 # For referring to single lines, try https://tex.stackexchange.com/questions/384686/circled-references-within-code-lstlisting
 
+
+#+CAPTION: This is an example for a Rust source code listing.
+#+NAME: src:rustexample
+#+ATTR_LATEX: :options captionpos=t
+#+begin_src rust
+fn main() {
+    // Print text to the console. Long lines are broken. Long lines are broken.
+    println!("Hello World!");
+}
+#+end_src
+
+
+
+#+CAPTION: This is an example for a Make source code listing.
+#+NAME: src:makeexample
+#+ATTR_LATEX: :options captionpos=t
+#+begin_src make
+.PHONY: all
+all: hello
+
+hello: hello.c
+	cc -o hello hello.c
+#+end_src
+
 * Second section
 
-\lipsum[5-6]
+\lipsum[5]
+
+Also tables can be exports, see table\nbsp[[tab:tabexample]].
+
+#+CAPTION: This is a table. It contains three columns, a column header, two rows and six entries.
+#+NAME: tab:tabexample
+#+ATTR_LATEX: :align c|c|c
+| First | Second | Third |
+|-------+--------+-------|
+| A     | B      | C     |
+| D     | E      | F     |
+
 
 
 #+PRINT_BIBLIOGRAPHY:
