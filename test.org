@@ -1,20 +1,26 @@
-#+TITLE: LaTeX-Test
-#+DATE: 2024-11-01
+#+TITLE: Example for an Org Mode export to LaTeX
+#+DATE:
 #+AUTHOR: Michael Fiedler
-#+OPTIONS: toc:nil ^:nil num:0
+# INCLUDE: include.org
+#+OPTIONS: toc:nil ^:nil num:3
 #+LANGUAGE: en
 #+LATEX_CLASS: article
 #+LATEX_CLASS_OPTIONS: [a4paper,10pt,oneside,twocolumn]
 #+LATEX_HEADER: \usepackage{lipsum}    % insert Lorem ipsum texts
 #+LATEX_HEADER: \usepackage{times}     % use Times font
+#+LATEX_HEADER: \usepackage{svg}
 #+LATEX_HEADER: \usepackage{titling}   % fine-tuning of \maketitle
-#+LATEX_HEADER: %\usepackage{flushend}  % columns of last page equal in size; messes up bibliography if used!
+# LATEX_HEADER: \usepackage{flushend}  % columns of last page equal in size; messes up bibliography if used!
 #+LATEX_HEADER: %\usepackage{cite}      % various improvements for \cite; incompatible with biblatex
 #+LATEX_HEADER: \usepackage{breakurl}           % break too-long urls in refs
 #+LATEX_HEADER: \usepackage{url}                % allow \url in bibtex for clickable links
-#+LATEX_HEADER: \usepackage{xcolor}    % color definitions, to be used for \hypersetup
+#+LATEX_HEADER: %\usepackage{xurl}      % allow line break anywhere in URL to avoid weird-looking space
+#+LATEX_HEADER: \usepackage{xcolor}    % color definitions, to be used for \hypersetup and \lstset
 #+LATEX_HEADER: \usepackage{hyperref}  % clickable references within PDF
 #+LATEX_HEADER: \usepackage{filecontents}  % for inlined bib file
+#+LATEX_HEADER: %\usepackage[kerning,spacing]{microtype} % more compact and arguably nicer
+#+LATEX_HEADER: \usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+#+LATEX_HEADER: \usepackage{tikz}
 #+BIBLIOGRAPHY: test.bib
 #+CITE_EXPORT: biblatex
 
@@ -29,19 +35,43 @@
   urlcolor={blue!70!black}
 }
 
+\colorlet{commentgreen}{teal!80!black}
+\colorlet{stringred}{red!60!black}
+\colorlet{keywordviolet}{violet!90!black}
+% configure listings package
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  %identifierstyle=,
+  commentstyle=\color{commentgreen},
+  stringstyle=\color{stringred},
+  keywordstyle=\color{keywordviolet}\bfseries,
+  showstringspaces=false,
+  breaklines=true,
+  numbers=left,  % overwritten to none by Org Mode export
+  numberstyle=\tiny,
+  %stepnumber=5,
+  %firstnumber=1,
+  %numberfirstline=true,
+  tabsize=4,
+}
+
 % Less space before title
-\setlength{\droptitle}{-2cm}
+\setlength{\droptitle}{-1cm}
+% In addition to geometry options, increase column separator width
+\setlength{\columnsep}{0.5cm}
 
 % make abstract span over all columns
 \twocolumn[
   \begin{@twocolumnfalse}
+    %\vspace*{2cm}
     \maketitle
 #+end_export
 
 # \noindent: prevent indent at begin of abstract
+# \normalsize: avoid that the abstract text is using a smaller font size than normal text
 
 #+BEGIN_abstract
-\noindent
+\noindent \normalsize
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
@@ -59,8 +89,43 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 * First section
 
-Citation example[cite:@arpachiDusseau18:osbook;@waldspurger02]. Footnote
-example[fn:: This is an inline footnote.].
+Example for a citation
+example\nbsp[cite:@arpachiDusseau18:osbook;@waldspurger02]. Example for an
+inline footnote[fn:: This is an inline footnote.].
+
+This is an example for references, to figure\nbsp[[fig:pnggraphic]],
+figure\nbsp[[fig:vectorgraphic]] and
+figure\nbsp\ref{fig:rawlatexusingtikz}. Moreover, the font sizes of headings
+should be smaller.
+
+#+CAPTION: This is a PNG graphic.
+#+NAME: fig:pnggraphic
+[[./bitmap_graphic.png]]
+
+# Vector graphics require package svg, Inkscape in PATH and pdflatex option -shell-escape
+#+CAPTION: This is the caption of this graphic. It is a vector graphic.
+#+NAME: fig:vectorgraphic
+[[./vector_graphic.svg]]
+
+
+
+# A raw LaTeX figure, using TikZ
+#+begin_export latex
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+  \draw[thin,gray!40] (-2,-2) grid (2,2);
+  \draw[<->] (-2,0)--(2,0) node[right]{$x$};
+  \draw[<->] (0,-2)--(0,2) node[above]{$y$};
+  \draw[line width=2pt,blue,-stealth](0,0)--(1,1)
+        node[anchor=south west]{$\boldsymbol{u}$};
+  \draw[line width=2pt,red,-stealth](0,0)--(-1,-1)
+        node[anchor=north east]{$\boldsymbol{-u}$};
+\end{tikzpicture}
+\end{center}
+\caption{\label{fig:rawlatexusingtikz} This is a TikZ picture.}
+\end{figure}
+#+end_export
 
 ** First subsection
 
@@ -69,6 +134,34 @@ example[fn:: This is an inline footnote.].
 ** Second subsection
 
 \lipsum[3-4]
+
+** Third subsection
+
+It is also possible to enter source code listings, see
+listing\nbsp[[src:lispexample]] and listing\nbsp[[src:javaexamplewithnumbers]].
+
+#+CAPTION: This is an example for an Emacs Lisp source code listing.
+#+NAME: src:lispexample
+#+BEGIN_SRC emacs-lisp
+  (defun org-xor (a b)
+    "Exclusive or."
+    (if a (not b) b))
+#+END_SRC
+
+#+CAPTION: This is an example for a Java source code listing with line numbers.
+#+NAME: src:javaexamplewithnumbers
+#+ATTR_LATEX: :options numbers=left
+#+begin_src java
+/**
+ * This is an example Java class.
+ */
+public class Example {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}
+#+end_src
+# For referring to single lines, try https://tex.stackexchange.com/questions/384686/circled-references-within-code-lstlisting
 
 * Second section
 
