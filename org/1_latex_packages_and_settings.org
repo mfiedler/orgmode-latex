@@ -1,0 +1,73 @@
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,10pt,oneside,twocolumn]
+#+LATEX_HEADER: \usepackage{lipsum}    % insert Lorem ipsum texts
+#+LATEX_HEADER: \usepackage{times}     % use Times font
+#+LATEX_HEADER: \usepackage{svg}
+#+LATEX_HEADER: \usepackage{titling}   % fine-tuning of \maketitle
+# LATEX_HEADER: \usepackage{flushend}  % columns of last page equal in size; messes up bibliography if used!
+#+LATEX_HEADER: %\usepackage{cite}      % various improvements for \cite; incompatible with biblatex
+#+LATEX_HEADER: \usepackage{breakurl}           % break too-long urls in refs
+#+LATEX_HEADER: \usepackage{url}                % allow \url in bibtex for clickable links
+#+LATEX_HEADER: %\usepackage{xurl}      % allow line break anywhere in URL to avoid weird-looking space
+#+LATEX_HEADER: \usepackage{xcolor}    % color definitions, to be used for \hypersetup and \lstset
+#+LATEX_HEADER: \usepackage{hyperref}  % clickable references within PDF
+#+LATEX_HEADER: \usepackage{filecontents}  % for inlined bib file
+#+LATEX_HEADER: %\usepackage[kerning,spacing]{microtype} % more compact and arguably nicer
+#+LATEX_HEADER: \usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{listings-rust}
+#+LATEX_HEADER: \usepackage{caption}
+#+LATEX_HEADER: \usepackage{MnSymbol}
+#+BIBLIOGRAPHY: bibliography.bib
+#+CITE_EXPORT: biblatex numeric-comp
+
+
+#+begin_export latex
+\hypersetup{
+  colorlinks,
+  linkcolor={green!80!black},
+  citecolor={red!70!black},
+  urlcolor={blue!70!black}
+}
+
+\urlstyle{same}  % fixed-width font takes too much space, so set to same, rm or sf
+
+\colorlet{commentgreen}{olive!80!black}
+\colorlet{stringred}{red!65!black}
+\colorlet{keywordviolet}{blue!30!darkgray}
+% configure listings package
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  %basicstyle=\scriptsize\ttfamily,
+  %identifierstyle=,
+  commentstyle=\color{commentgreen},
+  stringstyle=\color{stringred},
+  keywordstyle=\color{keywordviolet}\bfseries,
+  showstringspaces=false,
+  breaklines=true,
+  numbers=left,  % overwritten to none by Org Mode export
+  numberstyle=\tiny,
+  %stepnumber=5,
+  %firstnumber=1,
+  %numberfirstline=true,
+  tabsize=4,
+  abovecaptionskip=\medskipamount,
+  belowcaptionskip=\medskipamount,
+  breakatwhitespace=true,
+  %prebreak=\raisebox{0ex}[0ex][0ex]{\color{gray}\ensuremath{\lcurvearrowdown}},
+  prebreak=\raisebox{0ex}[0ex][0ex]{\color{gray}\ensuremath{\rhookswarrow}},
+  frame=lines,
+  framesep=5pt,
+  tabsize=4,
+  showtabs=true,
+}
+
+% space around table captions
+\captionsetup[table]{skip=\medskipamount}
+
+
+% Less space before title
+\setlength{\droptitle}{-1cm}
+% In addition to geometry options, increase column separator width
+\setlength{\columnsep}{0.5cm}
+#+end_export

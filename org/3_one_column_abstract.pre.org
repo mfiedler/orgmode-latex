@@ -1,0 +1,7 @@
+#+begin_export latex
+% make abstract span over all columns
+\twocolumn[
+  \begin{@twocolumnfalse}
+    %\vspace*{2cm}
+    \maketitle
+#+end_export

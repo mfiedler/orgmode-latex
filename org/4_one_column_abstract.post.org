@@ -1,0 +1,5 @@
+#+begin_export latex
+    \vspace{.75cm}  % fix too small space after abstract
+  \end{@twocolumnfalse}
+]
+#+end_export
