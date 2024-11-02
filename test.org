@@ -1,0 +1,78 @@
+#+TITLE: LaTeX-Test
+#+DATE: 2024-11-01
+#+AUTHOR: Michael Fiedler
+#+OPTIONS: toc:nil ^:nil num:0
+#+LANGUAGE: en
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper,10pt,oneside,twocolumn]
+#+LATEX_HEADER: \usepackage{lipsum}    % insert Lorem ipsum texts
+#+LATEX_HEADER: \usepackage{times}     % use Times font
+#+LATEX_HEADER: \usepackage{titling}   % fine-tuning of \maketitle
+#+LATEX_HEADER: %\usepackage{flushend}  % columns of last page equal in size; messes up bibliography if used!
+#+LATEX_HEADER: %\usepackage{cite}      % various improvements for \cite; incompatible with biblatex
+#+LATEX_HEADER: \usepackage{breakurl}           % break too-long urls in refs
+#+LATEX_HEADER: \usepackage{url}                % allow \url in bibtex for clickable links
+#+LATEX_HEADER: \usepackage{xcolor}    % color definitions, to be used for \hypersetup
+#+LATEX_HEADER: \usepackage{hyperref}  % clickable references within PDF
+#+LATEX_HEADER: \usepackage{filecontents}  % for inlined bib file
+#+BIBLIOGRAPHY: test.bib
+#+CITE_EXPORT: biblatex
+
+#+begin_export latex
+% Overwrite Org mode's AUTHOR for advanced usage
+\author{Firstname Lastname\\Company \and AnotherFirstname AnotherLastname \\ AnotherCompany}
+ 
+\hypersetup{
+  colorlinks,
+  linkcolor={green!80!black},
+  citecolor={red!70!black},
+  urlcolor={blue!70!black}
+}
+
+% Less space before title
+\setlength{\droptitle}{-2cm}
+
+% make abstract span over all columns
+\twocolumn[
+  \begin{@twocolumnfalse}
+    \maketitle
+#+end_export
+
+# \noindent: prevent indent at begin of abstract
+
+#+BEGIN_abstract
+\noindent
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
+ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+#+END_abstract
+#+begin_export latex
+    \vspace{.75cm}  % fix too small space after abstract
+  \end{@twocolumnfalse}
+]
+#+end_export
+
+* First section
+
+Citation example[cite:@arpachiDusseau18:osbook;@waldspurger02]. Footnote
+example[fn:: This is an inline footnote.].
+
+** First subsection
+
+\lipsum[1-2]
+
+** Second subsection
+
+\lipsum[3-4]
+
+* Second section
+
+\lipsum[5-6]
+
+
+#+PRINT_BIBLIOGRAPHY:
