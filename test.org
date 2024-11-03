@@ -1,7 +1,7 @@
 #+TITLE: Example for Org Mode export to LaTeX
 #+DATE:
 #+AUTHOR: Michael Fiedler
-# INCLUDE: include.org
+# TODO: use e. g. INCLUDE: include.org
 #+OPTIONS: toc:nil ^:nil num:3
 #+LANGUAGE: en
 #+LATEX_CLASS: article
@@ -48,12 +48,13 @@
 
 \urlstyle{same}  % fixed-width font takes too much space, so set to same, rm or sf
 
-\colorlet{commentgreen}{teal!80!black}
-\colorlet{stringred}{red!60!black}
-\colorlet{keywordviolet}{violet!90!black}
+\colorlet{commentgreen}{olive!80!lightgray}
+\colorlet{stringred}{red!65!black}
+\colorlet{keywordviolet}{blue!30!darkgray}
 % configure listings package
 \lstset{
   basicstyle=\footnotesize\ttfamily,
+  %basicstyle=\scriptsize\ttfamily,
   %identifierstyle=,
   commentstyle=\color{commentgreen},
   stringstyle=\color{stringred},
@@ -161,15 +162,16 @@ figure\nbsp\ref{fig:rawlatexusingtikz}.
 ** Third subsection
 
 It is also possible to enter source code listings, see
-listing\nbsp[[src:lispexample]] and listing\nbsp[[src:javaexamplewithnumbers]].
+listings\nbsp[[src:lispexample]], [[src:javaexamplewithnumbers]], [[src:rustexample]],
+[[src:makeexample]] .
 
 #+CAPTION: This is an example for an Emacs Lisp source code listing.
 #+NAME: src:lispexample
 #+ATTR_LATEX: :options captionpos=t
 #+BEGIN_SRC emacs-lisp
-  (defun org-xor (a b)
-    "Exclusive or."
-    (if a (not b) b))
+(defun factorial (n)
+    (if (zerop n) 1
+        (* n (factorial (1- n)))))
 #+END_SRC
 
 #+CAPTION: This is an example for a Java source code listing with line numbers.
