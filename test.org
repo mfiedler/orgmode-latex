@@ -35,8 +35,8 @@
 %}
 % https://tex.stackexchange.com/questions/9594/adding-more-than-one-author-with-different-affiliation
 \author{
-  \normalsize \textbf{Firstname Lastname} \\ \normalsize Institution \\ \small\texttt{lastname@institution.org}
-  \and \normalsize \textbf{Firstname Lastname} \\ \normalsize AnotherInstitution \\ \small\texttt{another@anotherinst.org}
+  \normalsize Firstname Lastname \\ \small\textit{Institution} \\ \footnotesize\texttt{lastname@institution.org}
+  \and \normalsize Firstname Lastname \\ \small\textit{AnotherInstitution} \\ \footnotesize\texttt{another@anotherinst.org}
 }
 
 \hypersetup{
@@ -48,7 +48,7 @@
 
 \urlstyle{same}  % fixed-width font takes too much space, so set to same, rm or sf
 
-\colorlet{commentgreen}{olive!80!lightgray}
+\colorlet{commentgreen}{olive!80!black}
 \colorlet{stringred}{red!65!black}
 \colorlet{keywordviolet}{blue!30!darkgray}
 % configure listings package
@@ -174,9 +174,9 @@ listings\nbsp[[src:lispexample]], [[src:javaexamplewithnumbers]], [[src:rustexam
         (* n (factorial (1- n)))))
 #+END_SRC
 
-#+CAPTION: This is an example for a Java source code listing with line numbers.
+#+CAPTION: This is an example for a Java source code listing with line numbers. To not have the numbers outside of the left column margin, we need to have no frame and an additional left margin for the listing.
 #+NAME: src:javaexamplewithnumbers
-#+ATTR_LATEX: :options numbers=left,captionpos=t
+#+ATTR_LATEX: :options numbers=left,captionpos=t,frame=none,xleftmargin=.5cm
 #+begin_src java
 /**
  * An example Java class.
@@ -195,7 +195,8 @@ public class Example {
 #+ATTR_LATEX: :options captionpos=t
 #+begin_src rust
 fn main() {
-    // Print text to the console. Long lines are broken. Long lines are broken.
+    // Print text to the console.
+    // Long lines are broken. Long lines are broken. Long lines are broken.
     println!("Hello World!");
 }
 #+end_src
