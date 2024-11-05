@@ -1,0 +1,8 @@
+#+begin_export latex
+% Overwrite Org mode's AUTHOR for advanced usage
+% https://tex.stackexchange.com/questions/9594/adding-more-than-one-author-with-different-affiliation
+\author{
+  \vspace{-1mm}\normalsize Firstname Lastname \\ \vspace{-1mm}\small\textit{Institution} \\ \footnotesize\texttt{lastname@institution.org}
+  \and \vspace{-1mm}\normalsize Firstname Lastname \\ \vspace{-1mm}\small\textit{AnotherInstitution} \\ \footnotesize\texttt{another@anotherinst.org}
+}
+#+end_export
