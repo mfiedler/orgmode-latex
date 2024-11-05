@@ -33,13 +33,13 @@ figure\nbsp\ref{fig:rawlatexusingtikz}.
 
 #+CAPTION: This is a PNG graphic.
 #+NAME: fig:pnggraphic
-[[./bitmap_graphic.png]]
+[[img/bitmap_graphic.png]]
 
 
 # Vector graphics require package svg, Inkscape in PATH and pdflatex option -shell-escape
 #+CAPTION: This is the caption of this graphic. It is a vector graphic.
 #+NAME: fig:vectorgraphic
-[[./vector_graphic.svg]]
+[[img/vector_graphic.svg]]
 
 
 # A raw LaTeX figure, using TikZ
