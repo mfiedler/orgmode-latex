@@ -24,7 +24,7 @@
 #+LATEX_HEADER: \usepackage{listings-rust}
 #+LATEX_HEADER: \usepackage{caption}
 #+LATEX_HEADER: \usepackage{MnSymbol}
-#+BIBLIOGRAPHY: test.bib
+#+BIBLIOGRAPHY: bibliography.bib
 #+CITE_EXPORT: biblatex numeric-comp
 
 #+begin_export latex
@@ -34,10 +34,10 @@
 %  \and Firstname Lastname \\ \textit{AnotherInstitution}
 %}
 % https://tex.stackexchange.com/questions/9594/adding-more-than-one-author-with-different-affiliation
-\author{
-  \normalsize Firstname Lastname \\ \small\textit{Institution} \\ \footnotesize\texttt{lastname@institution.org}
-  \and \normalsize Firstname Lastname \\ \small\textit{AnotherInstitution} \\ \footnotesize\texttt{another@anotherinst.org}
-}
+%\author{
+%  \normalsize Firstname Lastname \\ \small\textit{Institution} \\ \footnotesize\texttt{lastname@institution.org}
+%  \and \normalsize Firstname Lastname \\ \small\textit{AnotherInstitution} \\ \footnotesize\texttt{another@anotherinst.org}
+%}
 
 \hypersetup{
   colorlinks,
